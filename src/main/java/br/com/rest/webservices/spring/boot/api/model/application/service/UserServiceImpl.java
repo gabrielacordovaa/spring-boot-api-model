@@ -1,10 +1,12 @@
 package br.com.rest.webservices.spring.boot.api.model.application.service;
 
 import br.com.rest.webservices.spring.boot.api.model.application.dto.UserDTO;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -45,8 +47,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteOne(int id) {
-
+    public UserDTO deleteOne(int id) {
+        Iterator<UserDTO> iterator = users.iterator() ;
+        while(iterator.hasNext()){
+            UserDTO user = iterator.next();
+            if(user.getId() == id){
+                iterator.remove();
+                return user;
+            }
+        }
+        return null;
     }
 
 

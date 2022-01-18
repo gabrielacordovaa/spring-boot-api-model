@@ -5,6 +5,7 @@ import br.com.rest.webservices.spring.boot.api.model.application.dto.UserDTO;
 import br.com.rest.webservices.spring.boot.api.model.application.exception.UserNotFoundException;
 import br.com.rest.webservices.spring.boot.api.model.application.service.UserService;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,7 +47,10 @@ public class UserController {
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id){
-
+        UserDTO user = userService.deleteOne(id);
+        if(user == null){
+            throw new UserNotFoundException("id" + id);
+        }
     }
 
 }
