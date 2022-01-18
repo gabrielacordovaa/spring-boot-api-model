@@ -5,7 +5,10 @@ import br.com.rest.webservices.spring.boot.api.model.application.dto.UserDTO;
 import br.com.rest.webservices.spring.boot.api.model.application.exception.UserNotFoundException;
 import br.com.rest.webservices.spring.boot.api.model.application.service.UserService;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,12 +29,17 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public UserDTO retrieveUser(@PathVariable int id){
+    public EntityModel<UserDTO> retrieveUser(@PathVariable int id){
         UserDTO user =  userService.findOne(id);
         if(user == null){
             throw new UserNotFoundException("id-" + id);
         }
-        return user;
+        EntityModel<UserDTO> model = EntityModel.of(user);
+        WebMvcLinkBuilder linkToUsers =
+                linkTo(methodOn(this.getClass()).retrieveAll());
+
+        model.add(linkToUsers.withRel("all-users"));
+        return model;
     }
 
     @PostMapping("/users")
