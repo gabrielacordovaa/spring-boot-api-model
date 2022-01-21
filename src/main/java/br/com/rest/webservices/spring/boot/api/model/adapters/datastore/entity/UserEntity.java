@@ -7,9 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name="user")
+@Table(name="usertable")
 @Data
 @AllArgsConstructor
 @Builder
@@ -35,4 +36,7 @@ public class UserEntity {
 
     @Column(name = "PHONENUMBER")
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "user")
+    private List<PostEntity> posts;
 }
