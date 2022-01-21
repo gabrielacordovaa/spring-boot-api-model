@@ -10,5 +10,5 @@ public interface UserService {
     List<UserDTO> findAll();
     UserDTO save(UserDTO user);
     UserDTO findOne(int id);
-    UserDTO deleteOne(int id);
+    void deleteOne(int id);
 }

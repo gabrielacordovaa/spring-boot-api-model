@@ -1,9 +1,6 @@
 package br.com.rest.webservices.spring.boot.api.model.application.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -12,10 +9,13 @@ import java.util.Date;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class UserDTO {
 
 
+    @NotNull(message = "ID can not be null")
     private Integer id;
+
     @Size(min = 2, message = "Name should have at least two characters")
     private String name;
 
